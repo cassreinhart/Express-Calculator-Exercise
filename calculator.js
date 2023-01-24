@@ -1,4 +1,5 @@
-function mean(arr) {
+function mean(str) {
+    let arr = str.split(',');
     let sum = 0;
 
     for(let x of arr) {
@@ -7,13 +8,15 @@ function mean(arr) {
     return sum / arr.length;
 }
 
-function median(arr) {
+function median(str) {
+    let arr = str.split(',');
     let evenSetMid = [arr[((arr.length / 2) - 1)], arr[((arr.length / 2))]];
 
     return arr.length % 2 !== 0 ? Math.floor(arr[arr.length / 2]) : mean(evenSetMid)
 }
 
-function mode(arr) {
+function mode(str) {
+    let arr = str.split(',');
     let valueFreq = {};
     let mostFrequent;
 
@@ -21,7 +24,12 @@ function mode(arr) {
         valueFreq[x] ? valueFreq[x] + 1 : valueFreq[x] = 1;
     }
     for (let k of valueFreq) {
-        if (valueFreq[k] > mostFrequent) mostFrequent = valueFreq[k];
+        if (valueFreq[k] > mostFrequent) mostFrequent = valueFreq[k]
+        else if (Array.isArray(mostFrequent) && (valueFreq[k] == mostFrequent)) {
+            mostFrequent.push(valueFreq[k])
+        } else if (valueFreq[k] == mostFrequent) {
+            mostFrequent = [valueFreq[k]]
+        }
     }
     return mostFrequent;
 }
