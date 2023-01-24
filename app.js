@@ -1,14 +1,16 @@
 
 const express = require('express')
-const calculator = require('./calculator')
+const {mean, median, mode} = require('./calculator')
 
 const app = express();
 
 app.get("/mean", (req, res, next) => { 
   try {
-    // const user = USERS.find(u => u.username === req.params.username);
-    // if (!user) throw new ExpressError("invalid username", 404)
-    return res.send({user})
+    let val = mean(+req.query.split(","))
+    return res.json({
+        operation: "mean",
+        value: val
+        })
   } catch (e) {
     next(e)
   }
@@ -16,8 +18,11 @@ app.get("/mean", (req, res, next) => {
 
 app.get("/median", (req, res, next) => { 
   try {
-    ////
-    return res.send("CONGRATS")
+    let val = median(+req.query.split(","))
+    return res.json({
+        operation: "median",
+        value: val
+        })
   } catch (e) {
     next(e) 
   }
@@ -25,7 +30,11 @@ app.get("/median", (req, res, next) => {
 
 app.get("/mode", (req, res, next) => {
   try {
-    ///
+    let val = mode(+req.query.split(","))
+    return res.json({
+        operation: "mode",
+        value: val
+        })
   } catch (e) {
     // return next(new ExpressError("Calculation Error"))
   }
