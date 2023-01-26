@@ -6,27 +6,34 @@ function mean(nums) {
 }
 
 function median(nums) {
-    let evenSetMid = [arr[((arr.length / 2) - 1)], arr[((arr.length / 2))]];
+    //sort array, find mid
+    nums.sort((a, b) => a - b);
 
-    return arr.length % 2 !== 0 ? Math.floor(arr[arr.length / 2]) : mean(evenSetMid)
+    let midIdx = Math.floor(nums.length / 2)
+    let evenSetMid = [nums[((midIdx) - 1)], nums[((midIdx))]]; //find the middle two vals if even array
+
+    return nums.length % 2 !== 0 ? Math.floor(nums[midIdx / 2]) : mean(evenSetMid)
 }
 
 function mode(nums) {
     let valueFreq = {};
     let mostFrequent;
+    let count = 0;
 
     for (let x of arr) {
         valueFreq[x] ? valueFreq[x] + 1 : valueFreq[x] = 1;
     }
-    for (let k of valueFreq) {
-        if (valueFreq[k] > mostFrequent) mostFrequent = valueFreq[k]
-        else if (Array.isArray(mostFrequent) && (valueFreq[k] == mostFrequent)) {
-            mostFrequent.push(valueFreq[k])
-        } else if (valueFreq[k] == mostFrequent) {
-            mostFrequent = [valueFreq[k]]
+    for (let key in valueFreq) {
+        if (valueFreq[key] > count) {
+            mostFrequent = key;
+            count = valueFreq[key]
+        } else if (Array.isArray(mostFrequent) && (valueFreq[key] == count)) {
+            mostFrequent.push(key)
+        } else if (valueFreq[key] == count) {
+            mostFrequent = [key]
         }
     }
-    return mostFrequent;
+    return +mostFrequent;
 }
 
 function convertAndValidateArray(numsAsStrings) {
@@ -44,4 +51,4 @@ function convertAndValidateArray(numsAsStrings) {
     return res;
 }
 
-module.exports = { mean, median, mode }
+module.exports = { mean, median, mode, convertAndValidateArray }
