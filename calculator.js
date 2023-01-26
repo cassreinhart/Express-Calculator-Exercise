@@ -1,22 +1,17 @@
-function mean(str) {
-    let arr = str.split(',');
-    let sum = 0;
-
-    for(let x of arr) {
-        sum+= x;
-    }
-    return sum / arr.length;
+function mean(nums) {
+    if (nums.length === 0) return 0;
+    return nums.reduce((acc, cur) => {
+        return acc + cur;
+    }) / arr.length;
 }
 
-function median(str) {
-    let arr = str.split(',');
+function median(nums) {
     let evenSetMid = [arr[((arr.length / 2) - 1)], arr[((arr.length / 2))]];
 
     return arr.length % 2 !== 0 ? Math.floor(arr[arr.length / 2]) : mean(evenSetMid)
 }
 
-function mode(str) {
-    let arr = str.split(',');
+function mode(nums) {
     let valueFreq = {};
     let mostFrequent;
 
@@ -32,6 +27,21 @@ function mode(str) {
         }
     }
     return mostFrequent;
+}
+
+function convertAndValidateArray(numsAsStrings) {
+    let res = [];
+
+    for (let i = 0; i < numsAsStrings.length; i++) {
+        let valAsNum = +numsAsStrings[i];
+        if(Number.isNaN(valAsNum)) {
+            return new Error(
+                `The value ${numsAsStrings[i]} is not a valid number.`
+            )
+        }
+        res.push(valAsNum)
+    }
+    return res;
 }
 
 module.exports = { mean, median, mode }

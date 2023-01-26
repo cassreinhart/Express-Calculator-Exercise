@@ -1,18 +1,24 @@
-
 const express = require('express')
-const {mean, median, mode} = require('./calculator')
+const {mean, median, mode, convertAndValidateArray} = require('./calculator')
 const ExpressError = require('./expressError')
 
 const app = express();
 
 app.get("/mean", (req, res, next) => { 
   try {
-    console.log(req.query)
-    let val = mean(req.query)
+    if (!req.query.nums) {
+        throw new ExpressError('You must pass a query key of nums with a comma-separated list of numbers.', 400)
+    }
+    let numsAsStrings = req.query.nums.split(',');
+    let nums = convertAndValidateArray(numsAsStrings);
+
+    if (nums instanceof Error) {
+        throw new ExpressError(nums.message)
+    }
 
     return res.json({
         operation: "mean",
-        value: val
+        value: mean(nums)
         })
   } catch (e) {
     next(e)
